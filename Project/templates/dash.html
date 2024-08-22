@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <nav>
+        <a href = "{{url_for ('stats')}}">Stats</a>
+    </nav>
+    {% if fullname %}
+        <h1>Welcome {{fullname}}</h1>
+    {% else %}
+        <h1>Welcome to Dashboard</h1>
+    {%endif%}
+
+    <fieldset class="balance">
+        <legend>Total Cash Balance</legend>
+        <h2>${{dbalance}}</h2>
+    </fieldset>
+
+    <table>
+        <thead>
+            <tr>
+                <th>PortfolioType</th>
+                <th>Cash Balance</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if portfolios %}
+                {% for portfolio in portfolios%}
+                <tr>
+                    <td><a href="{{ url_for('portfolio_page', portfolioid=portfolio.PortfolioID) }}">{{ portfolio.PortfolioType }}</a></td>
+                    <td>{{ portfolio.PortfolioBalance }}</td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="3">No portfolios found.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    <div style="text-align: center;">
+        <button type="button" onclick="window.location.href='{{ url_for('create_portfolio') }}'" class="button-space">Create New Portfolio</button>
+        <button type="button" onclick="window.location.href='{{ url_for('login') }}'" class="button-space">Log Out</button>
+    </div>
+</body>
+</html>

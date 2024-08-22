@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Portfolio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body >
+    {% if portfolio %}
+        <h1>{{portfolio.PortfolioType}}</h1>
+    {%endif%}
+    <h2>Purchase a Stock</h2>
+
+    <form method="post">
+        <label for="stock_symbol">Stock Symbol:</label>
+        <input type="text" id="stock_symbol" name="stock_symbol" value="{{ stock_symbol }}" required><br>
+        <br>
+        <label for="a_stock">Quantity of Stock:</label>
+        <input type="text" id="num_shares" name="num_shares" value="{{ num_shares }}" required><br>
+        <br>
+        <button type="submit" name="confirm_stock">Confirm Stock Symbol</button>
+        {% if msg %}
+            <p>{{msg}}</p>
+            <p>Current Price: ${{stock_price}}</p>
+            <p>Total Cost of Purchase: ${{purchase_cost}}</p>
+        {%endif%}
+        {%if confirmed%}
+            <button type="submit" name="place_order">Complete Purchase</button>
+        {%endif%}
+        <button type="button" onclick="window.location.href='{{ url_for('portfolio_page',portfolioid=portfolio.PortfolioID ) }}'" class="button-space">Back</button>
+
+
+    </form>
+</body>
+</html>
